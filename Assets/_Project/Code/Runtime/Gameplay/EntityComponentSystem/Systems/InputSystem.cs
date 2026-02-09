@@ -1,6 +1,5 @@
 ﻿using Assets._Project.Code.Runtime.Gameplay.Components;
 using Assets._Project.Code.Runtime.Gameplay.Entities;
-using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components;
 using Assets._Project.Code.Runtime.Gameplay.EntitySystems;
 using Assets._Project.Code.Utility.InputService;
 using Assets._Project.Code.Utility.Reactive.Variable;
@@ -8,14 +7,18 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
 {
-    public class InputSystem : IEntitySystem, IInitializable, IUpdatable
+    public class InputSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private IInputService _inputService;
         private ReactiveVariable<Vector3> _direction;
 
+        public InputSystem(IInputService inputService)
+        {
+            _inputService = inputService;
+        }
+
         public void Initialize(Entity entity)
         {
-            _inputService = entity.GetComponent<InputComponent>().Value;
             _direction = entity.GetComponent<MoveDirectionComponent>().Value;
         }
 

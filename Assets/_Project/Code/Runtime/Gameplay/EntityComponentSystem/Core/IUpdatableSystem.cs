@@ -1,6 +1,6 @@
 namespace Assets._Project.Code.Runtime.Gameplay.EntitySystems
 {
-    public interface IUpdatable
+    public interface IUpdatableSystem
     {
         void Update(float deltaTime);
     }

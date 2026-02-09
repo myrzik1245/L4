@@ -11,8 +11,8 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 
         private readonly List<IEntitySystem> _systems = new List<IEntitySystem>();
 
-        private readonly List<IInitializable> _initializables = new List<IInitializable>();
-        private readonly List<IUpdatable> _updatables = new List<IUpdatable>();
+        private readonly List<IInitializableSystem> _initializables = new List<IInitializableSystem>();
+        private readonly List<IUpdatableSystem> _updatables = new List<IUpdatableSystem>();
         private readonly List<IDisposable> _disposables = new List<IDisposable>();
 
         private bool _isInit = false;
@@ -59,7 +59,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 
             _systems.Add(system);
 
-            if (system is IInitializable initializable)
+            if (system is IInitializableSystem initializable)
             {
                 _initializables.Add(initializable);
 
@@ -67,7 +67,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
                     initializable.Initialize(this);
             }
 
-            if (system is IUpdatable updatable)
+            if (system is IUpdatableSystem updatable)
                 _updatables.Add(updatable);
 
             if (system is IDisposable disposable)
@@ -78,7 +78,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 
         public void Initialize()
         {
-            foreach (IInitializable initializable in _initializables)
+            foreach (IInitializableSystem initializable in _initializables)
                 initializable.Initialize(this);
 
             _isInit = true;
@@ -89,7 +89,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
             if (_isInit == false)
                 return;
 
-            foreach (IUpdatable updatable in _updatables)
+            foreach (IUpdatableSystem updatable in _updatables)
                 updatable.Update(deltaTime);
         }
 

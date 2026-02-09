@@ -26,10 +26,9 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
             AddRotatableComponents(entity, 500);
 
             entity
-                .AddComponent(new InputComponent() { Value = _inputService })
                 .AddSystem(new CharacterControllerMovementSystem())
-                .AddSystem(new CharacterControllerAlongMovementRotatorSystem())
-                .AddSystem(new InputSystem());
+                .AddSystem(new TransformAlongMovementRotatorSystem())
+                .AddSystem(new InputSystem(_inputService));
 
             return entity;
         }
@@ -42,10 +41,9 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
             AddRotatableComponents(entity, 500);
 
             entity
-                .AddComponent(new InputComponent() { Value = _inputService })
                 .AddSystem(new RigidbodyMovementSystem())
                 .AddSystem(new RigidbodyAlongMovementRotatorSystem())
-                .AddSystem(new InputSystem());
+                .AddSystem(new InputSystem(_inputService));
 
             return entity;
         }

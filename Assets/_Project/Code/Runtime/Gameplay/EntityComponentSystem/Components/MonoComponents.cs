@@ -11,4 +11,9 @@ namespace Assets._Project.Code.Runtime.Gameplay.Components
     {
         public CharacterController Value;
     }
+
+    public class TransformComponent : IEntityComponent
+    {
+        public Transform Value;
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntitySystems
 {
-    public class RigidbodyMovementSystem : IEntitySystem, IInitializable, IUpdatable
+    public class RigidbodyMovementSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<Vector3> _direction;
         private ReactiveVariable<Vector3> _velocity;

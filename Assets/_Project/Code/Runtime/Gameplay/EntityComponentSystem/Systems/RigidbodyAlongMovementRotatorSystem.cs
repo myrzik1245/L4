@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
 {
-    public class RigidbodyAlongMovementRotatorSystem : IEntitySystem, IInitializable, IUpdatable
+    public class RigidbodyAlongMovementRotatorSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<Vector3> _movementDirection;
         private ReactiveVariable<float> _speed;

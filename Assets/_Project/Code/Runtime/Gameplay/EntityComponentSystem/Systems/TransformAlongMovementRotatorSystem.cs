@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
 {
-    public class CharacterControllerAlongMovementRotatorSystem : IEntitySystem, IInitializable, IUpdatable
+    public class TransformAlongMovementRotatorSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<Vector3> _movementDirection;
         private ReactiveVariable<float> _speed;
-        private CharacterController _characterController;
+        private Transform _transform;
 
         public void Initialize(Entity entity)
         {
             _movementDirection = entity.GetComponent<MoveDirectionComponent>().Value;
             _speed = entity.GetComponent<RotationSpeedComponent>().Value;
-            _characterController = entity.GetComponent<CharacterControllerComponent>().Value;
+            _transform = entity.GetComponent<TransformComponent>().Value;
         }
 
         public void Update(float deltaTime)
@@ -26,8 +26,8 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
                 return;
 
             Quaternion lockRotation = Quaternion.LookRotation(_movementDirection.Value);
-            _characterController.transform.rotation
-                = Quaternion.RotateTowards(_characterController.transform.rotation, lockRotation, _speed.Value * deltaTime);
+            _transform.rotation
+                = Quaternion.RotateTowards(_transform.rotation, lockRotation, _speed.Value * deltaTime);
         }
     }
 }

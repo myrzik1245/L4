@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
 {
-    public class CharacterControllerMovementSystem : IEntitySystem, IInitializable, IUpdatable
+    public class CharacterControllerMovementSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<Vector3> _direction;
         private ReactiveVariable<Vector3> _velocity;
