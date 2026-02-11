@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace Assets._Project.Code.Utility.Reactive.Variable
+namespace Assets._Project.Code.Runtime.Utility.Reactive.Variable
 {
     public class ReactiveVariable<T> : IReadOnlyReactiveVariable<T> where T : IEquatable<T>
     {
-        private T _value;
-        private List<Subscriber<T>> _subscribers = new List<Subscriber<T>>();
-        private List<Subscriber<T>> _toAdd = new List<Subscriber<T>>();
-        private List<Subscriber<T>> _toRemove = new List<Subscriber<T>>();
+        private readonly List<Subscriber<T, T>> _subscribers = new();
+        private readonly List<Subscriber<T, T>> _toAdd = new();
+        private readonly List<Subscriber<T, T>> _toRemove = new();
 
-        public ReactiveVariable(T value = default)
-        {
-            _value = value;
-        }
+        private T _value;
+
+        public ReactiveVariable() => _value = default;
+
+        public ReactiveVariable(T value) => _value = value;
 
         public T Value
         {
@@ -21,44 +21,41 @@ namespace Assets._Project.Code.Utility.Reactive.Variable
             set
             {
                 T oldValue = _value;
+
                 _value = value;
 
-                Add();
-                Remove();
-
                 if (_value.Equals(oldValue) == false)
-                    Invoke(_value);
+                    Invoke(oldValue, value);
             }
         }
 
-        public IDisposable Subscribe(Action<T> action)
+        public IDisposable Subscribe(Action<T, T> action)
         {
-            Subscriber<T> subscriber = new Subscriber<T>(action, subscriber => _toRemove.Add(subscriber));
+            Subscriber<T, T> subscriber = new Subscriber<T, T>(action, Remove);
             _toAdd.Add(subscriber);
-
             return subscriber;
         }
 
-        private void Invoke(T value)
-        {
-            foreach (Subscriber<T> subscriber in _subscribers)
-                subscriber.Invoke(value);
-        }
+        private void Remove(Subscriber<T, T> subscriber) => _toRemove.Add(subscriber);
 
-        private void Add()
+        private void Invoke(T oldValue, T newValue)
         {
-            foreach (Subscriber<T> subscriber in _toAdd)
-                _subscribers.Add(subscriber);
+            if(_toAdd.Count > 0)
+            {
+                _subscribers.AddRange(_toAdd);
+                _toAdd.Clear();
+            }
 
-            _toAdd.Clear();
-        }
-        
-        private void Remove()
-        {
-            foreach (Subscriber<T> subscriber in _toRemove)
-                _subscribers.Remove(subscriber);
+            if(_toRemove.Count > 0)
+            {
+                foreach (Subscriber<T, T> subscriber in _toRemove)
+                    _subscribers.Remove(subscriber);
 
-            _toRemove.Clear();
+                _toRemove.Clear();
+            }
+
+            foreach (Subscriber<T, T> subscriber in _subscribers)
+                subscriber.Invoke(oldValue, newValue);
         }
     }
 }

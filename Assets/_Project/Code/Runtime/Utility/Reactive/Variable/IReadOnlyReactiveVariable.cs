@@ -1,10 +1,11 @@
 using System;
 
-namespace Assets._Project.Code.Utility.Reactive.Variable
+namespace Assets._Project.Code.Runtime.Utility.Reactive.Variable
 {
-    public interface IReadOnlyReactiveVariable<T> where T : IEquatable<T>
+    public interface IReadOnlyReactiveVariable<T>
     {
         T Value { get; }
-        IDisposable Subscribe(Action<T> action);
+
+        IDisposable Subscribe(Action<T, T> action);
     }
 }

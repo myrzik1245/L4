@@ -1,70 +1,50 @@
-﻿using Assets._Project.Code.Runtime.Gameplay.Components;
-using Assets._Project.Code.Runtime.Gameplay.Entities;
-using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components;
+﻿using Assets._Project.Code.Runtime.Gameplay.Entities;
+using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Energy;
+using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Health;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems;
-using Assets._Project.Code.Runtime.Gameplay.EntitySystems;
-using Assets._Project.Code.Utility.InputService;
-using Assets._Project.Code.Utility.Reactive.Variable;
-using UnityEngine;
+using Assets._Project.Code.Runtime.Utility.Conditions;
+using Assets._Project.Code.Runtime.Utility.Reactive.Variable;
+using Assets._Project.Develop.Infrastructure.DI;
 
 namespace Assets._Project.Code.Runtime.Gameplay.Factories
 {
     public class EntitiesFactory
     {
-        private readonly IInputService _inputService;
+        private readonly DIContainer _container;
 
-        public EntitiesFactory(IInputService inputService)
+        public EntitiesFactory(DIContainer container)
         {
-            _inputService = inputService;
+            _container = container;
         }
 
-        public Entity CreateCharacterControllerEntity()
+        public Entity CreateTeleportationCharacter()
         {
-            Entity entity = CreateEmtyEntity();
+            Entity entity = CreateEmptyEntity();
 
-            AddMovableComponents(entity, 1);
-            AddRotatableComponents(entity, 500);
+            ICondition removeCondition = new CompositeCondition(
+                new FuncCondition(() => entity.IsAlive.Value == false));
 
-            entity
-                .AddSystem(new CharacterControllerMovementSystem())
-                .AddSystem(new TransformAlongMovementRotatorSystem())
-                .AddSystem(new InputSystem(_inputService));
+            entity.AddIsAlive(new ReactiveVariable<bool>(true))
+                .AddHealth(new ReactiveVariable<int>(100))
+                .AddMaxHealth(new ReactiveVariable<int>(100))
+                .AddEnergy(new ReactiveVariable<int>(100))
+                .AddMaxEnergy(new ReactiveVariable<int>(100))
+                .AddEnergyRegenPercent(new ReactiveVariable<int>(10))
+                .AddEnergyRegenCooldown(new ReactiveVariable<float>(1));
+
+            entity.AddSystem(new RemoveSelfSystem(removeCondition, _container.Resolve<EntityLifeContext>()))
+                .AddSystem(new AliveSystem())
+                .AddSystem(new ClampHealthSystem())
+                .AddSystem(new ClampEnergySystem())
+                .AddSystem(new EnergyRegenSystem());
 
             return entity;
         }
 
-        public Entity CreateRigidbodyPlayerEntity()
-        {
-            Entity entity = CreateEmtyEntity();
-
-            AddMovableComponents(entity, 500);
-            AddRotatableComponents(entity, 500);
-
-            entity
-                .AddSystem(new RigidbodyMovementSystem())
-                .AddSystem(new RigidbodyAlongMovementRotatorSystem())
-                .AddSystem(new InputSystem(_inputService));
-
-            return entity;
-        }
-
-        public Entity CreateEmtyEntity()
+        public Entity CreateEmptyEntity()
         {
             return new Entity();
-        }
-
-        private void AddMovableComponents(Entity entity, float speed)
-        {
-            entity
-                .AddComponent(new VelocityComponent() { Value = new ReactiveVariable<Vector3>(Vector3.zero) })
-                .AddComponent(new MoveDirectionComponent() { Value = new ReactiveVariable<Vector3>(Vector3.zero) })
-                .AddComponent(new MoveSpeedComponent() { Value = new ReactiveVariable<float>(speed) });
-        }
-        
-        private void AddRotatableComponents(Entity entity, float rotationSpeed)
-        {
-            entity
-                .AddComponent(new RotationSpeedComponent() { Value = new ReactiveVariable<float>(rotationSpeed) });
         }
     }
 }
