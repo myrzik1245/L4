@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems
 {
-    public class InputSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
+    public class MovementInputSystem : IEntitySystem, IInitializableSystem, IUpdatableSystem
     {
         private IInputService _inputService;
         private ReactiveVariable<Vector3> _direction;
 
-        public InputSystem(IInputService inputService)
+        public MovementInputSystem(IInputService inputService)
         {
             _inputService = inputService;
         }

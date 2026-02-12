@@ -18,6 +18,38 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> EnergyRegenCooldown => EnergyRegenCooldownC.Value;
 		public Entity AddEnergyRegenCooldown(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.Energy.EnergyRegenCooldownComponent() { Value = value });
 
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent TeleportRequestC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent TeleportRequest => TeleportRequestC.Value;
+		public Entity AddTeleportRequest(Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportEvent TeleportEventC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportEvent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent<UnityEngine.Vector3> TeleportEvent => TeleportEventC.Value;
+		public Entity AddTeleportEvent(Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent<UnityEngine.Vector3> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportEvent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRadiusComponent TeleportRadiusC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRadiusComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> TeleportRadius => TeleportRadiusC.Value;
+		public Entity AddTeleportRadius(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRadiusComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportSpendEnergyComponent TeleportSpendEnergyC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportSpendEnergyComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> TeleportSpendEnergy => TeleportSpendEnergyC.Value;
+		public Entity AddTeleportSpendEnergy(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportSpendEnergyComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent IsAliveC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Boolean> IsAlive => IsAliveC.Value;
+		public Entity AddIsAlive(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Boolean> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent HealthC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> Health => HealthC.Value;
+		public Entity AddHealth(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent MaxHealthC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> MaxHealth => MaxHealthC.Value;
+		public Entity AddMaxHealth(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent() { Value = value });
+
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent RotationSpeedC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> RotationSpeed => RotationSpeedC.Value;
+		public Entity AddRotationSpeed(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent() { Value = value });
+
 		public Assets._Project.Code.Runtime.Gameplay.Components.RigidbodyComponent RigidbodyC => GetComponent<Assets._Project.Code.Runtime.Gameplay.Components.RigidbodyComponent>();
 		public UnityEngine.Rigidbody Rigidbody => RigidbodyC.Value;
 		public Entity AddRigidbody(UnityEngine.Rigidbody value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.Components.RigidbodyComponent() { Value = value });
@@ -41,22 +73,6 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 		public Assets._Project.Code.Runtime.Gameplay.Components.MoveSpeedComponent MoveSpeedC => GetComponent<Assets._Project.Code.Runtime.Gameplay.Components.MoveSpeedComponent>();
 		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> MoveSpeed => MoveSpeedC.Value;
 		public Entity AddMoveSpeed(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.Components.MoveSpeedComponent() { Value = value });
-
-		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent IsAliveC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent>();
-		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Boolean> IsAlive => IsAliveC.Value;
-		public Entity AddIsAlive(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Boolean> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.IsAliveComponent() { Value = value });
-
-		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent HealthC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent>();
-		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> Health => HealthC.Value;
-		public Entity AddHealth(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.HealthComponent() { Value = value });
-
-		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent MaxHealthC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent>();
-		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> MaxHealth => MaxHealthC.Value;
-		public Entity AddMaxHealth(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Int32> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.MaxHealthComponent() { Value = value });
-
-		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent RotationSpeedC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent>();
-		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> RotationSpeed => RotationSpeedC.Value;
-		public Entity AddRotationSpeed(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Components.RotationSpeedComponent() { Value = value });
 
 	}
 }

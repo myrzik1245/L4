@@ -2,6 +2,7 @@ using Assets._Project.Code.Runtime.Gameplay.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntitySystems;
 using Assets._Project.Code.Runtime.Utility.Reactive.Variable;
 using System;
+using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Energy
 {
@@ -28,8 +29,11 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Energy
 
             if (_time >= _regenCooldown.Value)
             {
+                Debug.Log(_energy.Value);
+
                 _time = 0;
-                _energy.Value = Math.Clamp(_maxEnergy.Value / _regenPercent.Value, 0, _maxEnergy.Value);
+                int delta = _maxEnergy.Value / _regenPercent.Value;
+                _energy.Value = Math.Clamp(_energy.Value + delta, 0, _maxEnergy.Value);
             }
         }
     }

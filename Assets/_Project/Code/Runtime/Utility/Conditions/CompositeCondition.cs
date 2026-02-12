@@ -14,6 +14,7 @@ namespace Assets._Project.Code.Runtime.Utility.Conditions
         public CompositeCondition(Func<bool, bool, bool> logicOperation, params ICondition[] condtions)
         {
             _conditions = condtions;
+            _logicOperation = logicOperation;
         }
 
         public bool IsCompleate()
