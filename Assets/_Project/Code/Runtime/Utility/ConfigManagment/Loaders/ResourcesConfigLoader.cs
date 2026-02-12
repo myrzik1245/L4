@@ -1,3 +1,4 @@
+using Assets._Project.Code.Runtime.Configs.Characters;
 using Assets._Project.Code.Runtime.Utility.AssetsManagment;
 using System;
 using System.Collections;
@@ -11,7 +12,8 @@ namespace Assets._Project.Code.Runtime.Utility.ConfigManagment.Loaders
         private readonly ResourcesAssetsLoader _resourcesAssetsLoader;
         private readonly Dictionary<Type, string> _pathsMap = new Dictionary<Type, string>()
         {
-
+            { typeof(TeleportCharacter), "Configs/Characters/TeleportCharacter" },
+            { typeof(TargetCharacter), "Configs/Characters/TargetCharacter" }
         };
 
         public ResourcesConfigLoader(ResourcesAssetsLoader resourcesAssetsLoader)

@@ -8,7 +8,7 @@ namespace Assets._Project.Code.Runtime.Utility.ConfigManagment
     public class ConfigsProvider
     {
         private readonly IConfigLoader[] _loaders;
-        private readonly Dictionary<Type, object> _configs;
+        private readonly Dictionary<Type, object> _configs = new Dictionary<Type, object>();
 
         public ConfigsProvider(params IConfigLoader[] loaders)
         {

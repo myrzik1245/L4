@@ -11,9 +11,9 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.T
             _transform = characterController;
         }
 
-        public void Execute(Vector3 position)
+        public void Execute(Vector3 offset)
         {
-            _transform.position = position;
+            _transform.position += offset;
         }
     }
 }

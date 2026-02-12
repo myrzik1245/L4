@@ -1,8 +1,10 @@
+using Assets._Project.Code.Runtime.Configs.Characters;
 using Assets._Project.Code.Runtime.Gameplay.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Code.Runtime.Gameplay.Factories;
 using Assets._Project.Code.Runtime.Infrastructure.Registrations;
 using Assets._Project.Code.Runtime.Utility.AssetsManagment;
+using Assets._Project.Code.Runtime.Utility.ConfigManagment;
 using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Infrastructure.EntryPoint;
 using Assets._Project.Develop.Utility.SceneManagment.SceneInputArgs;
@@ -24,20 +26,27 @@ namespace Assets._Project.Code.Infrastructure.EntryPoints
             EntitiesFactory entitiesFactory = container.Resolve<EntitiesFactory>();
             MonoEntitiesFactory monoEntitiesFactory = container.Resolve<MonoEntitiesFactory>();
             ResourcesAssetsLoader resourcesAssetsLoader = container.Resolve<ResourcesAssetsLoader>();
+            ConfigsProvider configsProvider = container.Resolve<ConfigsProvider>();
 
-            Entity teleportationEntity = entitiesFactory.CreateTeleportationCharacter();
-            Entity target = entitiesFactory.CreateTarget();
+            Entity teleportEntity
+                = entitiesFactory.CreateTeleportationCharacter(configsProvider.GetConfig<TeleportCharacter>());
 
-            MonoEntity rigidbodyPrefab
-                = resourcesAssetsLoader.Load<MonoEntity>("Gameplay/MonoEntities/RigidbodyEntity");
+            Entity target
+                = entitiesFactory.CreateTarget(configsProvider.GetConfig<TargetCharacter>());
 
-            MonoEntity monoRigidbodyPlayer
-                = monoEntitiesFactory.Create(teleportationEntity, Vector3.right, rigidbodyPrefab);
+            MonoEntity teleporCharacterPrefab
+                = resourcesAssetsLoader.Load<MonoEntity>("Gameplay/MonoEntities/TeleportCharacter");
+
+            MonoEntity targetCharacter
+                = resourcesAssetsLoader.Load<MonoEntity>("Gameplay/MonoEntities/TargetCharacter");
+
+            MonoEntity teleportCharacter
+                = monoEntitiesFactory.Create(teleportEntity, Vector3.right, teleporCharacterPrefab);
 
             MonoEntity rigidbodyTarget
-                = monoEntitiesFactory.Create(target, Vector3.left, rigidbodyPrefab);
+                = monoEntitiesFactory.Create(target, Vector3.left, teleporCharacterPrefab);
 
-            _lifeContext.Add(teleportationEntity);
+            _lifeContext.Add(teleportEntity);
             _lifeContext.Add(target);
 
             yield break;
