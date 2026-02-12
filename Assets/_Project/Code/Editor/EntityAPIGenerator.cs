@@ -54,7 +54,10 @@ namespace Assets._Project.Code.Editor
                     stringBuilder.AppendLine($"\t\tpublic {nameof(Entity)} Add{name}({GetValidGenericName(field.FieldType)} value) => AddComponent(new {GetValidGenericName(type)}() {{ {FieldName} = value }});");
 
                     stringBuilder.AppendLine();
-
+                }
+                else
+                {
+                    throw new NullReferenceException($"{type} doesn't have field with name {FieldName}");
                 }
             }
 

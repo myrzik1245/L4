@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Code.Runtime.Gameplay.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Damage;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Energy;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Health;
@@ -45,7 +46,10 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
                 .AddTeleportRequest(new ReactiveEvent())
                 .AddTeleportRadius(new ReactiveVariable<float>(3))
                 .AddTeleportEvent(new ReactiveEvent<Vector3>())
-                .AddTeleportSpendEnergy(new ReactiveVariable<int>(20));
+                .AddTeleportSpendEnergy(new ReactiveVariable<int>(20))
+                .AddAttackRadius(new ReactiveVariable<float>(5))
+                .AddDamage(new ReactiveVariable<int>(10))
+                .AddDamageRequest(new ReactiveEvent<int>());
 
             entity.AddSystem(new RemoveSelfSystem(removeCondition, _container.Resolve<EntityLifeContext>()))
                 .AddSystem(new AliveSystem())
@@ -56,7 +60,27 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
                 .AddSystem(new TeleportSystem(
                     new RadiusPositionRandomizer(entity.TeleportRadius.Value),
                     teleportCondition))
-                .AddSystem(new SpendEnergyOnTeleportSystem());
+                .AddSystem(new SpendEnergyOnTeleportSystem())
+                .AddSystem(new AttackOnTeleportSystem())
+                .AddSystem(new TakeDamageSystem());
+
+            return entity;
+        }
+
+        public Entity CreateTarget()
+        {
+            Entity entity = CreateEmptyEntity();
+
+            ICondition removeCondition = new CompositeCondition(
+                new FuncCondition(() => entity.IsAlive.Value == false));
+
+            entity.AddIsAlive(new ReactiveVariable<bool>(true))
+                .AddHealth(new ReactiveVariable<int>(20))
+                .AddDamageRequest(new ReactiveEvent<int>());
+
+            entity.AddSystem(new RemoveSelfSystem(removeCondition, _container.Resolve<EntityLifeContext>()))
+                .AddSystem(new AliveSystem())
+                .AddSystem(new TakeDamageSystem());
 
             return entity;
         }

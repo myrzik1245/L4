@@ -26,6 +26,7 @@ namespace Assets._Project.Code.Infrastructure.EntryPoints
             ResourcesAssetsLoader resourcesAssetsLoader = container.Resolve<ResourcesAssetsLoader>();
 
             Entity teleportationEntity = entitiesFactory.CreateTeleportationCharacter();
+            Entity target = entitiesFactory.CreateTarget();
 
             MonoEntity rigidbodyPrefab
                 = resourcesAssetsLoader.Load<MonoEntity>("Gameplay/MonoEntities/RigidbodyEntity");
@@ -33,7 +34,11 @@ namespace Assets._Project.Code.Infrastructure.EntryPoints
             MonoEntity monoRigidbodyPlayer
                 = monoEntitiesFactory.Create(teleportationEntity, Vector3.right, rigidbodyPrefab);
 
+            MonoEntity rigidbodyTarget
+                = monoEntitiesFactory.Create(target, Vector3.left, rigidbodyPrefab);
+
             _lifeContext.Add(teleportationEntity);
+            _lifeContext.Add(target);
 
             yield break;
         }
