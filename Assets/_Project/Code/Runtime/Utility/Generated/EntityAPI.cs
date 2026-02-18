@@ -42,9 +42,13 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
 		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> MoveSpeed => MoveSpeedC.Value;
 		public Entity AddMoveSpeed(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<System.Single> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.Components.MoveSpeedComponent() { Value = value });
 
+		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportPositionComponent TeleportPositionC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportPositionComponent>();
+		public Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<UnityEngine.Vector3> TeleportPosition => TeleportPositionC.Value;
+		public Entity AddTeleportPosition(Assets._Project.Code.Runtime.Utility.Reactive.Variable.ReactiveVariable<UnityEngine.Vector3> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportPositionComponent() { Value = value });
+
 		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent TeleportRequestC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent>();
-		public Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent TeleportRequest => TeleportRequestC.Value;
-		public Entity AddTeleportRequest(Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent() { Value = value });
+		public Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent<UnityEngine.Vector3> TeleportRequest => TeleportRequestC.Value;
+		public Entity AddTeleportRequest(Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent<UnityEngine.Vector3> value) => AddComponent(new Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportRequestComponent() { Value = value });
 
 		public Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportEvent TeleportEventC => GetComponent<Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportEvent>();
 		public Assets._Project.Code.Runtime.Utility.Reactive.Event.ReactiveEvent<UnityEngine.Vector3> TeleportEvent => TeleportEventC.Value;

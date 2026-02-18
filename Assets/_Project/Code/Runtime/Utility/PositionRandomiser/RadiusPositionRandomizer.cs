@@ -11,10 +11,10 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.P
             _radius = radius;
         }
 
-        public Vector3 GetPosition()
+        public Vector3 GetPosition(Vector3 offset = default)
         {
-            Vector2 randomPoint = Random.insideUnitCircle;
-            return new Vector3(randomPoint.x, 0, randomPoint.y) * Random.Range(0, _radius);
-        }
+            Vector2 randomPoint = Random.insideUnitCircle * _radius;
+            return new Vector3(randomPoint.x, 0, randomPoint.y) + offset;
+       } 
     }
 }

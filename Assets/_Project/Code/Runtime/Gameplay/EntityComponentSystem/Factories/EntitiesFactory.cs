@@ -8,12 +8,12 @@ using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Health;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Systems;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.PositionRandomiser;
+using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.TeleportApplySystems;
 using Assets._Project.Code.Runtime.Utility.Conditions;
 using Assets._Project.Code.Runtime.Utility.Reactive.Event;
 using Assets._Project.Code.Runtime.Utility.Reactive.Variable;
 using Assets._Project.Code.Utility.InputService;
 using Assets._Project.Develop.Infrastructure.DI;
-using System.ComponentModel;
 using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.Factories
@@ -39,7 +39,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
                 .AddMaxEnergy(new ReactiveVariable<int>(config.MaxEnergy))
                 .AddEnergyRegenPercent(new ReactiveVariable<int>(config.EnergyRegenPercent))
                 .AddEnergyRegenCooldown(new ReactiveVariable<float>(config.EnergyRegenCooldown))
-                .AddTeleportRequest(new ReactiveEvent())
+                .AddTeleportRequest(new ReactiveEvent<Vector3>())
                 .AddTeleportRadius(new ReactiveVariable<float>(config.TeleportRadius))
                 .AddTeleportEvent(new ReactiveEvent<Vector3>())
                 .AddTeleportSpendEnergy(new ReactiveVariable<int>(config.TeleportSpendEnergy))
@@ -59,10 +59,11 @@ namespace Assets._Project.Code.Runtime.Gameplay.Factories
                 .AddSystem(new ClampHealthSystem())
                 .AddSystem(new ClampEnergySystem())
                 .AddSystem(new EnergyRegenSystem())
-                .AddSystem(new TeleportInputSystem(_container.Resolve<IInputService>()))
-                .AddSystem(new TeleportSystem(
-                    new RadiusPositionRandomizer(entity.TeleportRadius.Value),
-                    teleportCondition))
+                .AddSystem(new TeleportInputSystem(
+                    _container.Resolve<IInputService>(),
+                    new RadiusPositionRandomizer(entity.TeleportRadius.Value)))
+                .AddSystem(new TransformTeleportApplySystem())
+                .AddSystem(new TeleportSystem(teleportCondition))
                 .AddSystem(new SpendEnergyOnTeleportSystem())
                 .AddSystem(new AttackOnTeleportSystem())
                 .AddSystem(new TakeDamageSystem());

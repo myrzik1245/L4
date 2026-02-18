@@ -4,6 +4,6 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport.P
 {
     public interface IPositionRandomizer
     {
-        Vector3 GetPosition();
+        Vector3 GetPosition(Vector3 offset = default);
     }
 }

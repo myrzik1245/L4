@@ -5,9 +5,14 @@ using UnityEngine;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Teleport
 {
+    public class TeleportPositionComponent : IEntityComponent
+    {
+        public ReactiveVariable<Vector3> Value;
+    }
+
     public class TeleportRequestComponent : IEntityComponent
     {
-        public ReactiveEvent Value;
+        public ReactiveEvent<Vector3> Value;
     }
 
     public class TeleportEvent : IEntityComponent
