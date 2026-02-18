@@ -16,17 +16,21 @@ namespace Assets._Project.Develop.Infrastructure.DI
 
         public IRegistrationOptions Register<T>(Func<DIContainer, T> creator)
         {
-            if (_container.ContainsKey(typeof(T)))
-            {
-                if (_parantContainer != null && _parantContainer._container.ContainsKey(typeof(T)))
+            if (_parantContainer != null && _parantContainer.HasRegistration<T>())
+                throw new InvalidOperationException($"Parent container already contains {typeof(T)}");
 
-                throw new InvalidOperationException($"container already contains {typeof(T)}");
-            }
+            if (HasRegistration<T>())
+                throw new InvalidOperationException($"Container already contains {typeof(T)}");
 
             Registration registration = new Registration(container => creator.Invoke(container));
             _container.Add(typeof(T), registration);
 
             return registration;
+        }
+
+        public bool HasRegistration<T>()
+        {
+            return _container.ContainsKey(typeof(T));
         }
 
         public T Resolve<T>()

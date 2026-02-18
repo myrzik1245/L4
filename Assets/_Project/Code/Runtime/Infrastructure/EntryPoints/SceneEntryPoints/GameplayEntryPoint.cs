@@ -11,7 +11,7 @@ using Assets._Project.Develop.Utility.SceneManagment.SceneInputArgs;
 using System.Collections;
 using UnityEngine;
 
-namespace Assets._Project.Code.Infrastructure.EntryPoints
+namespace _Project.Code.Runtime.Infrastructure.EntryPoints.SceneEntryPoints
 {
     public class GameplayEntryPoint : SceneEntryPoint
     {
