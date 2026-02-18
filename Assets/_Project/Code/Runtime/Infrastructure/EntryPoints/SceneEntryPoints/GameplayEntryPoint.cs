@@ -1,3 +1,4 @@
+using _Project.Code.Runtime.Utility.Update;
 using Assets._Project.Code.Runtime.Configs.Characters;
 using Assets._Project.Code.Runtime.Gameplay.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
@@ -16,12 +17,14 @@ namespace _Project.Code.Runtime.Infrastructure.EntryPoints.SceneEntryPoints
     public class GameplayEntryPoint : SceneEntryPoint
     {
         private EntityLifeContext _lifeContext;
+        private IUpdatableService _updatableService;
 
         public override IEnumerator Initialize(DIContainer container, IInputSceneArgs inputSceneArgs = null)
         {
             GameplayRegistrations.Register(container);
 
             _lifeContext = container.Resolve<EntityLifeContext>();
+            _updatableService = container.Resolve<IUpdatableService>();
 
             EntitiesFactory entitiesFactory = container.Resolve<EntitiesFactory>();
             MonoEntitiesFactory monoEntitiesFactory = container.Resolve<MonoEntitiesFactory>();
@@ -49,6 +52,8 @@ namespace _Project.Code.Runtime.Infrastructure.EntryPoints.SceneEntryPoints
             _lifeContext.Add(teleportEntity);
             _lifeContext.Add(target);
 
+            _updatableService.AddRequest(_lifeContext);
+
             yield break;
         }
 
@@ -57,14 +62,10 @@ namespace _Project.Code.Runtime.Infrastructure.EntryPoints.SceneEntryPoints
             yield break;
         }
 
-        private void Update()
-        {
-            _lifeContext?.Update(Time.deltaTime);
-        }
-
         private void OnDestroy()
         {
             _lifeContext.Dispose();
+            _updatableService.RemoveRequest(_lifeContext);
         }
     }
 }

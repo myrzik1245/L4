@@ -1,12 +1,13 @@
-﻿using Assets._Project.Code.Runtime.Gameplay.Entities;
+﻿using _Project.Code.Runtime.Utility.Update;
+using Assets._Project.Code.Runtime.Gameplay.Entities;
 using System;
 using System.Collections.Generic;
 
 namespace Assets._Project.Code.Runtime.Gameplay.EntitiesCore
 {
-    public class EntityLifeContext
+    public class EntityLifeContext : IUpdate
     {
-        public event Action<Entity> Aded;
+        public event Action<Entity> Added;
         public event Action<Entity> Removed;
 
         private readonly List<Entity> _entities = new List<Entity>();
@@ -18,7 +19,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntitiesCore
 
             entity.Initialize();
 
-            Aded?.Invoke(entity);
+            Added?.Invoke(entity);
         }
 
         public void Remove(Entity entity)
@@ -28,8 +29,8 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntitiesCore
 
         public void Update(float deltaTime)
         {
-            for (int i = 0; i < _entities.Count; i++)
-                _entities[i].Update(deltaTime);
+            foreach (Entity entity in _entities)
+                entity.Update(deltaTime);
 
             foreach (Entity removedEntity in _toRemove)
             {
