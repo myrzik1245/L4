@@ -1,4 +1,5 @@
-﻿using Assets._Project.Code.Runtime.Configs.Characters;
+﻿using _Project.Code.Runtime.Gameplay.EntityComponentSystem.Core;
+using Assets._Project.Code.Runtime.Configs.Characters;
 using Assets._Project.Code.Runtime.Gameplay.Entities;
 using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Code.Runtime.Gameplay.EntityComponentSystem.Damage;

@@ -1,3 +1,5 @@
+using _Project.Code.Runtime.Gameplay.AI.Brains;
+using _Project.Code.Runtime.Gameplay.EntityComponentSystem.Core;
 using Assets._Project.Code.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Code.Runtime.Gameplay.Factories;
 using Assets._Project.Code.Utility.InputService;
@@ -14,8 +16,20 @@ namespace Assets._Project.Code.Runtime.Infrastructure.Registrations
             gameplayContainer.Register(CreateEntitiesFactory).AsSingle();
             gameplayContainer.Register(CreateEntityLifeContext).AsSingle();
             gameplayContainer.Register(CreateMonoEntityFactory).AsSingle();
+            gameplayContainer.Register(CreateBrainsFactory).AsSingle();
+            gameplayContainer.Register(CreateBrainContext).AsSingle();
 
             gameplayContainer.Initialize();
+        }
+
+        private static BrainsContext CreateBrainContext(DIContainer c)
+        {
+            return new BrainsContext();
+        }
+
+        private static BrainsFactory CreateBrainsFactory(DIContainer c)
+        {
+            return new BrainsFactory(c);
         }
 
         private static MonoEntitiesFactory CreateMonoEntityFactory(DIContainer c)

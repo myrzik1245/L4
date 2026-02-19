@@ -1,4 +1,5 @@
-﻿using Assets._Project.Code.Runtime.Gameplay.Entities;
+﻿using _Project.Code.Runtime.Gameplay.EntityComponentSystem.Core;
+using Assets._Project.Code.Runtime.Gameplay.Entities;
 using System.Collections.Generic;
 using UnityEngine;
 using System;

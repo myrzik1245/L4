@@ -3,7 +3,7 @@ using Assets._Project.Code.Runtime.Gameplay.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace Assets._Project.Code.Runtime.Gameplay.EntitiesCore
+namespace _Project.Code.Runtime.Gameplay.EntityComponentSystem.Core
 {
     public class EntityLifeContext : IUpdate
     {
@@ -12,6 +12,8 @@ namespace Assets._Project.Code.Runtime.Gameplay.EntitiesCore
 
         private readonly List<Entity> _entities = new List<Entity>();
         private readonly List<Entity> _toRemove = new List<Entity>();
+
+        public IReadOnlyList<Entity> Entities => _entities;
 
         public void Add(Entity entity)
         {

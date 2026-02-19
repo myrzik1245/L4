@@ -15,7 +15,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
         private readonly List<IUpdatableSystem> _updatables = new List<IUpdatableSystem>();
         private readonly List<IDisposable> _disposables = new List<IDisposable>();
 
-        private bool _isInit = false;
+        public bool IsInit { get; private set; } = false;
 
         public bool HasComponent<TComponent>() where TComponent : IEntityComponent
         {
@@ -63,7 +63,7 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
             {
                 _initializables.Add(initializable);
 
-                if (_isInit)
+                if (IsInit)
                     initializable.Initialize(this);
             }
 
@@ -81,12 +81,12 @@ namespace Assets._Project.Code.Runtime.Gameplay.Entities
             foreach (IInitializableSystem initializable in _initializables)
                 initializable.Initialize(this);
 
-            _isInit = true;
+            IsInit = true;
         }
 
         public void Update(float deltaTime)
         {
-            if (_isInit == false)
+            if (IsInit == false)
                 return;
 
             foreach (IUpdatableSystem updatable in _updatables)

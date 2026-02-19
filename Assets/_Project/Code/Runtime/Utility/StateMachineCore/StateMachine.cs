@@ -31,6 +31,9 @@ namespace _Project.Code.Runtime.Utility.StateMachineCore
 
         public void Update()
         {
+            if (_currentStateNode == null)
+                return;
+
             foreach (Transition<TState> transition in _currentStateNode.Transitions)
                 if (transition.Condition.IsCompleate())
                     SwichState(transition.ToStateNode);

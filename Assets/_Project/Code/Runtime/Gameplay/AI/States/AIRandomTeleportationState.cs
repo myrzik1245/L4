@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Project.Code.Runtime.Gameplay.AI.States
 {
-    public class RandomTeleportationState : State, IUpdatableState
+    public class AIRandomTeleportationState : State, IUpdatableState
     {
         private readonly ReactiveEvent<Vector3> _teleportRequest;
         private readonly Transform _transform;
@@ -15,7 +15,7 @@ namespace _Project.Code.Runtime.Gameplay.AI.States
 
         private float _time;
 
-        public RandomTeleportationState(Entity entity, IPositionRandomizer positionRandomizer, float cooldown)
+        public AIRandomTeleportationState(Entity entity, IPositionRandomizer positionRandomizer, float cooldown)
         {
             _teleportRequest = entity.TeleportRequest;
             _transform = entity.Transform;
