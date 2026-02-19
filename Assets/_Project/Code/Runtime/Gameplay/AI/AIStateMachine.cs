@@ -1,4 +1,5 @@
 ﻿using _Project.Code.Runtime.Utility.StateMachineCore;
+using UnityEngine;
 
 namespace _Project.Code.Runtime.Gameplay.AI
 {
@@ -6,6 +7,7 @@ namespace _Project.Code.Runtime.Gameplay.AI
     {
         public void Update(float deltaTime)
         {
+            Update();
             CurrentState?.Update(deltaTime);
         }
     }

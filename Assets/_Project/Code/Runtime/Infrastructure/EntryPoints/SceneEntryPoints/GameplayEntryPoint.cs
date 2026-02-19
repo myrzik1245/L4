@@ -41,9 +41,11 @@ namespace _Project.Code.Runtime.Infrastructure.EntryPoints.SceneEntryPoints
             BrainsFactory brainsFactory = container.Resolve<BrainsFactory>();
 
             Entity teleportEntity = CreateTeleportCharacter(Vector3.right);
-            Entity targetEntity = CreateTargetCharacter(Vector3.left);
+            CreateTargetCharacter(Vector3.left * 5);
+            CreateTargetCharacter(Vector3.forward * 5);
+            CreateTargetCharacter(Vector3.back * 5);
 
-            brainsFactory.CreateTeleportBrain(teleportEntity);
+            brainsFactory.CreateSmartTeleportBrain(teleportEntity);
 
             _updatableService.AddRequest(_entityLifeContext);
             _updatableService.AddRequest(_brainsContext);

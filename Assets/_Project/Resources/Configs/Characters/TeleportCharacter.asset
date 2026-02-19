@@ -17,8 +17,8 @@ MonoBehaviour:
   <Energy>k__BackingField: 60
   <MaxEnergy>k__BackingField: 100
   <EnergyRegenPercent>k__BackingField: 10
-  <EnergyRegenCooldown>k__BackingField: 5
-  <TeleportRadius>k__BackingField: 10
+  <EnergyRegenCooldown>k__BackingField: 1
+  <TeleportRadius>k__BackingField: 2
   <TeleportSpendEnergy>k__BackingField: 20
   <AttackRadius>k__BackingField: 5
   <Damage>k__BackingField: 10

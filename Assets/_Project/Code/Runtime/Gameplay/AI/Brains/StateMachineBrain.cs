@@ -30,6 +30,7 @@
         protected override void UpdateLogic(float deltaTime)
         {
             _aiStateMachine.Update(deltaTime);
+            _aiStateMachine.Update();
         }
     }
 }
